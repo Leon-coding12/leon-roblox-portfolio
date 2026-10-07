@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leon | Roblox Designer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ffd700;
+            --primary-dark: #cc9900;
+            --accent: #ff6b35;
+            --dark-bg: #0a0e27;
+            --dark-secondary: #1a2042;
+            --dark-tertiary: #232d4a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b8d4;
+            --text-muted: #7a8299;
+            --border: rgba(255, 215, 0, 0.1);
+            --glow: rgba(255, 215, 0, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #0f1535 50%, var(--dark-bg) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 14, 39, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1.2rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .lang-toggle {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .lang-toggle button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle button.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #000;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-text h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #000;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.35);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-card {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .floating-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2), transparent);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-50px, -50px) scale(1.2); }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            background: rgba(255, 215, 0, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .section-title .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(32, 42, 84, 0.8), rgba(35, 45, 74, 0.8));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.15);
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.02) 0%, rgba(255, 107, 53, 0.02) 100%);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .skills-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-category {
+            margin-bottom: 2rem;
+        }
+
+        .skill-title {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-badge {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 107, 53, 0.1));
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            border-color: var(--primary);
+            background: rgba(255, 215, 0, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .progress-bar {
+            margin-top: 0.5rem;
+            height: 6px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+            animation: fillProgress 1s ease-out forwards;
+        }
+
+        @keyframes fillProgress {
+            from { width: 0; }
+            to { width: var(--progress); }
+        }
+
+        .skill-item-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 0;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: var(--text-secondary);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-highlights {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .highlight-box {
+            background: rgba(255, 215, 0, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .highlight-box strong {
+            color: var(--primary);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 0;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 107, 53, 0.08));
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent);
+            border-radius: 50%;
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        .contact-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        .contact-card p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .header-content {
+                padding: 0 1.5rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                height: 300px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-appear {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .scroll-appear.visible {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">Leon</div>
+            <nav>
+                <a href="#projects" data-i18n="navProjects">Projekte</a>
+                <a href="#skills" data-i18n="navSkills">Skills</a>
+                <a href="#about" data-i18n="navAbout">Über mich</a>
+                <a href="#contact" data-i18n="navContact">Kontakt</a>
+            </nav>
+            <div class="lang-toggle">
+                <button data-lang="de" class="active" data-i18n="langDE">DE</button>
+                <button data-lang="en" data-i18n="langEN">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text fade-in">
+                    <h1>
+                        <span data-i18n="heroLine1">Roblox Character</span><br>
+                        <span class="highlight" data-i18n="heroLine2">Designer & Outfit Specialist</span>
+                    </h1>
+                    <p data-i18n="heroSubtitle">
+                        Ich kreiere einzigartige, hochwertige Charakterdesigns und Outfits, die dein Roblox-Projekt zum Leben erwecken. Von minimalistisch bis extravagant – jedes Design wird deine Vision perfekt widerspiegeln.
+                    </p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" data-i18n="ctaPrimary" onclick="document.getElementById('contact').scrollIntoView()">Projekt Starten</button>
+                        <button class="btn btn-secondary" data-i18n="ctaSecondary" onclick="document.getElementById('projects').scrollIntoView()">Portfolio ansehen</button>
+                    </div>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label" data-i18n="stat1">Design Projekte</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label" data-i18n="stat2">Kundenzufriedenheit</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">3+</div>
+                            <div class="stat-label" data-i18n="stat3">Jahre Erfahrung</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-card">👨‍💼</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 class="section-title" data-i18n="projectsTitle">Ausgewählte <span class="highlight" data-i18n="projectsHighlight">Projekte</span></h2>
+            <p class="section-subtitle" data-i18n="projectsSubtitle">Einblick in meine neuesten und erfolgreichsten Designs</p>
+            
+            <div class="projects-grid">
+                <div class="project-card scroll-appear">
+                    <div class="project-icon">🏆</div>
+                    <h3 data-i18n="project1Title">Premium Armor Collection</h3>
+                    <p data-i18n="project1Desc">
+                        Hochwertige Rüstungs- und Combat-Outfits mit detaillierten Texturen und modernem Design-Ansatz. Perfekt für Action-Games und RPG-Erlebnisse.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Design</span>
+                        <span class="tag">Roblox</span>
+                        <span class="tag">Character</span>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-appear">
+                    <div class="project-icon">👑</div>
+                    <h3 data-i18n="project2Title">Elite Roleplay Sets</h3>
+                    <p data-i18n="project2Desc">
+                        Maßgeschneiderte Charaktersets für Roleplaying-Server. Von Admin-Outfits bis hin zu exklusiven VIP-Designs – alles mit Premium-Qualität.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Roleplay</span>
+                        <span class="tag">Custom</span>
+                        <span class="tag">VIP</span>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-appear">
+                    <div class="project-icon">✨</div>
+                    <h3 data-i18n="project3Title">Creative Streetwear</h3>
+                    <p data-i18n="project3Desc">
+                        Moderne, trendige Streetwear-Designs mit urban Style. Perfekt für Casual-Games und Community-Events mit hohem Wiedererkennungswert.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Streetwear</span>
+                        <span class="tag">Trend</span>
+                        <span class="tag">Casual</span>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-appear">
+                    <div class="project-icon">🎨</div>
+                    <h3 data-i18n="project4Title">Brand Identity Design</h3>
+                    <p data-i18n="project4Desc">
+                        Komplette visuelle Identitäten für Roblox-Games und Communities. Konsistente Charakterdesigns, die deine Marke perfekt repräsentieren.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Branding</span>
+                        <span class="tag">Identity</span>
+                        <span class="tag">Visual</span>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-appear">
+                    <div class="project-icon">🚀</div>
+                    <h3 data-i18n="project5Title">Futuristic Concepts</h3>
+                    <p data-i18n="project5Desc">
+                        Sci-Fi und Cyberpunk-Designs mit modernem, futuristischem Look. Ideale für Innovation und zeitgenössische Roblox-Erlebnisse.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Sci-Fi</span>
+                        <span class="tag">Futuristic</span>
+                        <span class="tag">Cyberpunk</span>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-appear">
+                    <div class="project-icon">💎</div>
+                    <h3 data-i18n="project6Title">Luxury Accessories</h3>
+                    <p data-i18n="project6Desc">
+                        Exklusive Accessory-Sets mit Premium-Finishing. Accessories, die dein Outfit komplettieren und den finalen Polish geben.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Accessories</span>
+                        <span class="tag">Luxury</span>
+                        <span class="tag">Premium</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <h2 class="section-title" data-i18n="skillsTitle">Meine <span class="highlight" data-i18n="skillsHighlight">Fähigkeiten</span></h2>
+            
+            <div class="skills-grid">
+                <div class="skills-content">
+                    <h3 data-i18n="skillsSubtitle">Professionelle Expertise</h3>
+                    <div class="skill-category">
+                        <div class="skill-title" data-i18n="designCategory">Design & Kreativität</div>
+                        <div class="skill-items">
+                            <span class="skill-badge">Character Design</span>
+                            <span class="skill-badge">Outfit Creation</span>
+                            <span class="skill-badge">Visual Styling</span>
+                            <span class="skill-badge">Concept Art</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-title" data-i18n="technicalCategory">Technisch</div>
+                        <div class="skill-items">
+                            <span class="skill-badge">Roblox Studio</span>
+                            <span class="skill-badge">Texture Mapping</span>
+                            <span class="skill-badge">Asset Creation</span>
+                            <span class="skill-badge">UV Unwrapping</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-title" data-i18n="softwareCategory">Software</div>
+                        <div class="skill-items">
+                            <span class="skill-badge">Blender</span>
+                            <span class="skill-badge">Photoshop</span>
+                            <span class="skill-badge">Figma</span>
+                            <span class="skill-badge">Adobe Suite</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="skill-item-row">
+                        <div class="skill-label">
+                            <span>Character Design</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="--progress: 95%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item-row">
+                        <div class="skill-label">
+                            <span data-i18n="skillOutfitCreation">Outfit Erstellung</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="--progress: 92%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item-row">
+                        <div class="skill-label">
+                            <span data-i18n="skillTextureDesign">Textur & Shading</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="--progress: 88%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item-row">
+                        <div class="skill-label">
+                            <span data-i18n="skillBranding">Branding & Visual Identity</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="--progress: 90%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item-row">
+                        <div class="skill-label">
+                            <span data-i18n="skillAnimation">Animation & Rigging</span>
+                            <span>78%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="--progress: 78%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item-row">
+                        <div class="skill-label">
+                            <span data-i18n="skillUXDesign">UX/UI Design</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="--progress: 85%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title" data-i18n="aboutTitle">Über <span class="highlight" data-i18n="aboutHighlight">Leon</span></h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p data-i18n="aboutPara1">
+                        Ich bin ein leidenschaftlicher Roblox Designer mit über 3 Jahren Erfahrung in der Kreation von Charakteren, Outfits und visuellen Identitäten. Mein Fokus liegt auf Premium-Qualität, durchdachtem Design und der Umsetzung deiner kreativen Vision.
+                    </p>
+                    <p data-i18n="aboutPara2">
+                        Jedes Projekt behandle ich als einzigartige Chance, etwas Besonderes zu schaffen. Egal ob du ein Admin-Outfit brauchst, ein ganzes Game-Design oder eine Community-Identity – ich bringe deine Ideen zum Leben mit Leidenschaft und Detailgenauigkeit.
+                    </p>
+                    <p data-i18n="aboutPara3">
+                        Mit einer Kombination aus künstlerischer Kreativität und technischem Know-How kreiere ich Designs, die nicht nur optisch beeindruckend, sondern auch funktional perfekt sind.
+                    </p>
+                </div>
+
+                <div class="about-highlights">
+                    <div class="highlight-box">
+                        <strong data-i18n="approach">Mein Ansatz:</strong>
+                        <br><span data-i18n="approachDesc">Verstehen, Kreieren, Perfektionieren</span>
+                    </div>
+                    <div class="highlight-box">
+                        <strong data-i18n="delivery">Lieferumfang:</strong>
+                        <br><span data-i18n="deliveryDesc">Komplette Design-Pakete mit mehreren Variationen</span>
+                    </div>
+                    <div class="highlight-box">
+                        <strong data-i18n="timeline">Zeitrahmen:</strong>
+                        <br><span data-i18n="timelineDesc">Schnelle Umsetzung ohne Kompromisse bei der Qualität</span>
+                    </div>
+                    <div class="highlight-box">
+                        <strong data-i18n="support">Unterstützung:</strong>
+                        <br><span data-i18n="supportDesc">Unbegrenzte Überarbeitungen bis zur Zufriedenheit</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-card">
+                <h2 data-i18n="contactTitle">Bist du bereit, etwas Großartiges zu schaffen?</h2>
+                <p data-i18n="contactSubtitle">Lass uns zusammen ein Design umsetzen, das dein Projekt auf das nächste Level bringt.</p>
+                <div class="contact-buttons">
+                    <a href="mailto:contact@leon-design.com" class="btn btn-primary" data-i18n="contactEmail">✉️ E-Mail schreiben</a>
+                    <a href="https://discord.com" class="btn btn-secondary" data-i18n="contactDiscord">💬 Discord Message</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p data-i18n="footerText">© 2026 Leon | Roblox Designer & Character Design Specialist</p>
+            <div class="footer-links">
+                <a href="#projects" data-i18n="footerProjects">Projekte</a>
+                <a href="#skills" data-i18n="footerSkills">Skills</a>
+                <a href="#about" data-i18n="footerAbout">Über mich</a>
+                <a href="#contact" data-i18n="footerContact">Kontakt</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            de: {
+                navProjects: "Projekte",
+                navSkills: "Skills",
+                navAbout: "Über mich",
+                navContact: "Kontakt",
+                langDE: "DE",
+                langEN: "EN",
+                heroLine1: "Roblox Character",
+                heroLine2: "Designer & Outfit Specialist",
+                heroSubtitle: "Ich kreiere einzigartige, hochwertige Charakterdesigns und Outfits, die dein Roblox-Projekt zum Leben erwecken. Von minimalistisch bis extravagant – jedes Design wird deine Vision perfekt widerspiegeln.",
+                ctaPrimary: "Projekt Starten",
+                ctaSecondary: "Portfolio ansehen",
+                stat1: "Design Projekte",
+                stat2: "Kundenzufriedenheit",
+                stat3: "Jahre Erfahrung",
+                projectsTitle: "Ausgewählte",
+                projectsHighlight: "Projekte",
+                projectsSubtitle: "Einblick in meine neuesten und erfolgreichsten Designs",
+                project1Title: "Premium Armor Collection",
+                project1Desc: "Hochwertige Rüstungs- und Combat-Outfits mit detaillierten Texturen und modernem Design-Ansatz. Perfekt für Action-Games und RPG-Erlebnisse.",
+                project2Title: "Elite Roleplay Sets",
+                project2Desc: "Maßgeschneiderte Charaktersets für Roleplaying-Server. Von Admin-Outfits bis hin zu exklusiven VIP-Designs – alles mit Premium-Qualität.",
+                project3Title: "Creative Streetwear",
+                project3Desc: "Moderne, trendige Streetwear-Designs mit urban Style. Perfekt für Casual-Games und Community-Events mit hohem Wiedererkennungswert.",
+                project4Title: "Brand Identity Design",
+                project4Desc: "Komplette visuelle Identitäten für Roblox-Games und Communities. Konsistente Charakterdesigns, die deine Marke perfekt repräsentieren.",
+                project5Title: "Futuristic Concepts",
+                project5Desc: "Sci-Fi und Cyberpunk-Designs mit modernem, futuristischem Look. Ideale für Innovation und zeitgenössische Roblox-Erlebnisse.",
+                project6Title: "Luxury Accessories",
+                project6Desc: "Exklusive Accessory-Sets mit Premium-Finishing. Accessories, die dein Outfit komplettieren und den finalen Polish geben.",
+                skillsTitle: "Meine",
+                skillsHighlight: "Fähigkeiten",
+                skillsSubtitle: "Professionelle Expertise",
+                designCategory: "Design & Kreativität",
+                technicalCategory: "Technisch",
+                softwareCategory: "Software",
+                skillOutfitCreation: "Outfit Erstellung",
+                skillTextureDesign: "Textur & Shading",
+                skillBranding: "Branding & Visual Identity",
+                skillAnimation: "Animation & Rigging",
+                skillUXDesign: "UX/UI Design",
+                aboutTitle: "Über",
+                aboutHighlight: "Leon",
+                aboutPara1: "Ich bin ein leidenschaftlicher Roblox Designer mit über 3 Jahren Erfahrung in der Kreation von Charakteren, Outfits und visuellen Identitäten. Mein Fokus liegt auf Premium-Qualität, durchdachtem Design und der Umsetzung deiner kreativen Vision.",
+                aboutPara2: "Jedes Projekt behandle ich als einzigartige Chance, etwas Besonderes zu schaffen. Egal ob du ein Admin-Outfit brauchst, ein ganzes Game-Design oder eine Community-Identity – ich bringe deine Ideen zum Leben mit Leidenschaft und Detailgenauigkeit.",
+                aboutPara3: "Mit einer Kombination aus künstlerischer Kreativität und technischem Know-How kreiere ich Designs, die nicht nur optisch beeindruckend, sondern auch funktional perfekt sind.",
+                approach: "Mein Ansatz:",
+                approachDesc: "Verstehen, Kreieren, Perfektionieren",
+                delivery: "Lieferumfang:",
+                deliveryDesc: "Komplette Design-Pakete mit mehreren Variationen",
+                timeline: "Zeitrahmen:",
+                timelineDesc: "Schnelle Umsetzung ohne Kompromisse bei der Qualität",
+                support: "Unterstützung:",
+                supportDesc: "Unbegrenzte Überarbeitungen bis zur Zufriedenheit",
+                contactTitle: "Bist du bereit, etwas Großartiges zu schaffen?",
+                contactSubtitle: "Lass uns zusammen ein Design umsetzen, das dein Projekt auf das nächste Level bringt.",
+                contactEmail: "✉️ E-Mail schreiben",
+                contactDiscord: "💬 Discord Message",
+                footerText: "© 2026 Leon | Roblox Designer & Character Design Specialist",
+                footerProjects: "Projekte",
+                footerSkills: "Skills",
+                footerAbout: "Über mich",
+                footerContact: "Kontakt"
+            },
+            en: {
+                navProjects: "Projects",
+                navSkills: "Skills",
+                navAbout: "About",
+                navContact: "Contact",
+                langDE: "DE",
+                langEN: "EN",
+                heroLine1: "Roblox Character",
+                heroLine2: "Designer & Outfit Specialist",
+                heroSubtitle: "I create unique, high-quality character designs and outfits that bring your Roblox project to life. From minimalist to extravagant – every design perfectly reflects your vision.",
+                ctaPrimary: "Start Project",
+                ctaSecondary: "View Portfolio",
+                stat1: "Design Projects",
+                stat2: "Client Satisfaction",
+                stat3: "Years Experience",
+                projectsTitle: "Featured",
+                projectsHighlight: "Projects",
+                projectsSubtitle: "Insight into my latest and most successful designs",
+                project1Title: "Premium Armor Collection",
+                project1Desc: "High-quality armor and combat outfits with detailed textures and modern design approach. Perfect for action games and RPG experiences.",
+                project2Title: "Elite Roleplay Sets",
+                project2Desc: "Custom character sets for roleplay servers. From admin outfits to exclusive VIP designs – all with premium quality.",
+                project3Title: "Creative Streetwear",
+                project3Desc: "Modern, trendy streetwear designs with urban style. Perfect for casual games and community events with high recognition value.",
+                project4Title: "Brand Identity Design",
+                project4Desc: "Complete visual identities for Roblox games and communities. Consistent character designs that perfectly represent your brand.",
+                project5Title: "Futuristic Concepts",
+                project5Desc: "Sci-Fi and cyberpunk designs with modern, futuristic look. Ideal for innovation and contemporary Roblox experiences.",
+                project6Title: "Luxury Accessories",
+                project6Desc: "Exclusive accessory sets with premium finishing. Accessories that complete your outfit and give the final polish.",
+                skillsTitle: "My",
+                skillsHighlight: "Skills",
+                skillsSubtitle: "Professional Expertise",
+                designCategory: "Design & Creativity",
+                technicalCategory: "Technical",
+                softwareCategory: "Software",
+                skillOutfitCreation: "Outfit Creation",
+                skillTextureDesign: "Texture & Shading",
+                skillBranding: "Branding & Visual Identity",
+                skillAnimation: "Animation & Rigging",
+                skillUXDesign: "UX/UI Design",
+                aboutTitle: "About",
+                aboutHighlight: "Leon",
+                aboutPara1: "I'm a passionate Roblox designer with over 3 years of experience creating characters, outfits, and visual identities. My focus is on premium quality, thoughtful design, and bringing your creative vision to life.",
+                aboutPara2: "I treat every project as a unique opportunity to create something special. Whether you need an admin outfit, full game design, or community identity – I bring your ideas to life with passion and attention to detail.",
+                aboutPara3: "With a combination of artistic creativity and technical expertise, I create designs that are not only visually impressive but also functionally perfect.",
+                approach: "My Approach:",
+                approachDesc: "Understand, Create, Perfectionize",
+                delivery: "Deliverables:",
+                deliveryDesc: "Complete design packages with multiple variations",
+                timeline: "Timeline:",
+                timelineDesc: "Fast execution without compromising quality",
+                support: "Support:",
+                supportDesc: "Unlimited revisions until satisfaction",
+                contactTitle: "Ready to create something amazing?",
+                contactSubtitle: "Let's work together to create a design that takes your project to the next level.",
+                contactEmail: "✉️ Send Email",
+                contactDiscord: "💬 Discord Message",
+                footerText: "© 2026 Leon | Roblox Designer & Character Design Specialist",
+                footerProjects: "Projects",
+                footerSkills: "Skills",
+                footerAbout: "About",
+                footerContact: "Contact"
+            }
+        };
+
+        // Language switching
+        document.querySelectorAll('.lang-toggle button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                setLanguage(lang);
+                localStorage.setItem('language', lang);
+            });
+        });
+
+        function setLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('.lang-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+            document.documentElement.lang = lang;
+        }
+
+        // Initialize
+        const savedLang = localStorage.getItem('language') || 'de';
+        setLanguage(savedLang);
+
+        // Scroll animations
+        const scrollElements = document.querySelectorAll('.scroll-appear');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        scrollElements.forEach(el => observer.observe(el));
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
